@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -66,13 +65,5 @@ public class SucursalController {
         return sucursalService.updateNombre(id, dto)
                 .map(ResponseEntity::ok)
                 .doOnNext(response -> log.info("Sucursal actualizada: {}", id));
-    }
-
-    @DeleteMapping("/{id}")
-    public Mono<ResponseEntity<Void>> delete(
-            @PathVariable UUID id) {
-        return sucursalService.delete(id)
-                .then(Mono.just(ResponseEntity.noContent().<Void>build()))
-                .doOnNext(response -> log.info("Sucursal eliminada: {}", id));
     }
 }

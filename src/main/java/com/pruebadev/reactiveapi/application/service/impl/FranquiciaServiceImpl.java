@@ -29,7 +29,6 @@ public class FranquiciaServiceImpl implements FranquiciaService {
     public Mono<FranquiciaResponseDTO> create(CreateFranquiciaDTO dto) {
         return Mono.fromCallable(() -> {
             Franquicia franquicia = franquiciaMapper.dtoToDomain(dto);
-            franquicia.setId(UUID.randomUUID());
             franquicia.setCreatedAt(Instant.now());
             franquicia.setUpdatedAt(Instant.now());
             franquicia.setActiva(true);

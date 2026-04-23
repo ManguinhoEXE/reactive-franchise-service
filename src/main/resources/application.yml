@@ -2,11 +2,11 @@ spring:
   application:
     name: reactive-api
   r2dbc:
-    url: ${DB_URL:r2dbc:postgresql://localhost:5432/reactive_api}
-    username: ${DB_USERNAME:postgres}
-    password: ${DB_PASSWORD:postgres}
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     properties:
-      sslMode: ${DB_SSL_MODE:disable}
+      sslMode: ${DB_SSL_MODE}
   sql:
     init:
       mode: never

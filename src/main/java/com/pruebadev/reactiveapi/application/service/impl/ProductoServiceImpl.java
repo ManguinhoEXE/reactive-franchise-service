@@ -31,15 +31,17 @@ public class ProductoServiceImpl implements ProductoService {
 
     @Override
     public Mono<ProductoResponseDTO> create(CreateProductoDTO dto) {
-        return Mono.fromCallable(() -> {
-            Producto producto = productoMapper.dtoToDomain(dto);
-            producto.setId(UUID.randomUUID());
-            producto.setCreatedAt(Instant.now());
-            producto.setUpdatedAt(Instant.now());
-            producto.setActivo(true);
-            return producto;
-        })
-        .flatMap(producto -> productoRepository.save(productoMapper.domainToEntity(producto))
+        return sucursalRepository.findById(dto.getSucursalId())
+            .switchIfEmpty(Mono.error(new EntityNotFoundException(
+                "Sucursal no encontrada con ID: " + dto.getSucursalId())))
+            .then(Mono.fromCallable(() -> {
+                Producto producto = productoMapper.dtoToDomain(dto);
+                producto.setCreatedAt(Instant.now());
+                producto.setUpdatedAt(Instant.now());
+                producto.setActivo(true);
+                return producto;
+            }))
+            .flatMap(producto -> productoRepository.save(productoMapper.domainToEntity(producto))
                 .map(productoMapper::entityToDomain)
                 .map(productoMapper::toResponseDTO)
                 .doOnSuccess(response -> log.info("Producto creado: {}", response.getId()))

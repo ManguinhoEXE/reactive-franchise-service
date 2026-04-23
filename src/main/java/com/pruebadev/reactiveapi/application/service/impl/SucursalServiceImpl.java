@@ -29,7 +29,6 @@ public class SucursalServiceImpl implements SucursalService {
     public Mono<SucursalResponseDTO> create(CreateSucursalDTO dto) {
         return Mono.fromCallable(() -> {
             Sucursal sucursal = sucursalMapper.dtoToDomain(dto);
-            sucursal.setId(UUID.randomUUID());
             sucursal.setCreatedAt(Instant.now());
             sucursal.setUpdatedAt(Instant.now());
             sucursal.setActiva(true);

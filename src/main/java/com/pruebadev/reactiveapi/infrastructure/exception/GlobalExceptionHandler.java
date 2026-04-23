@@ -1,6 +1,7 @@
 package com.pruebadev.reactiveapi.infrastructure.exception;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -57,6 +58,24 @@ public class GlobalExceptionHandler {
         
         return Mono.just(ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse));
     }
+
+        @ExceptionHandler(DataIntegrityViolationException.class)
+        public Mono<ResponseEntity<ErrorResponseDTO>> handleDataIntegrityViolation(
+                        DataIntegrityViolationException ex,
+                        ServerWebExchange exchange) {
+
+                log.warn("Data integrity violation: {}", ex.getMessage());
+
+                ErrorResponseDTO errorResponse = ErrorResponseDTO.builder()
+                                .timestamp(Instant.now())
+                                .status(HttpStatus.BAD_REQUEST.value())
+                                .error("DATA_INTEGRITY_ERROR")
+                                .message("No se pudo guardar por restriccion de datos (FK, unico o not null)")
+                                .path(exchange.getRequest().getPath().value())
+                                .build();
+
+                return Mono.just(ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse));
+        }
 
     @ExceptionHandler(Exception.class)
     public Mono<ResponseEntity<ErrorResponseDTO>> handleGenericException(
