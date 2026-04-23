@@ -1,0 +1,33 @@
+# Git metadata
+.git
+.gitignore
+
+# Build output
+target
+build
+out
+dist
+
+# IDE and editor files
+.idea
+.vscode
+*.iml
+
+# Logs
+*.log
+logs
+
+# OS metadata
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Other
+*.tmp
+*.swp
+*.swo
