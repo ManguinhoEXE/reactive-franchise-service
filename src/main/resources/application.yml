@@ -15,3 +15,10 @@ logging:
   level:
     org.springframework.r2dbc: INFO
     io.r2dbc.postgresql: INFO
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    operationsSorter: method
+    tagsSorter: alpha
