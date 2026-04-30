@@ -1,4 +1,4 @@
-# Reactive API - Prueba Tecnica
+# Reactive API
 
 API REST reactiva para gestion de franquicias, sucursales y productos, construida con Spring Boot y WebFlux sobre PostgreSQL (Supabase) via R2DBC.
 
